@@ -1,0 +1,31 @@
+name: bg-remover-api
+description: AI-powered background removal — upload image, get transparent PNG
+version: 1.0.0
+runtime: python3.10
+entrypoint: api.py
+endpoints:
+  - path: /remove-bg
+    method: POST
+    handler: remove_background
+    requestBody:
+      contentType: multipart/form-data
+      schema:
+        type: object
+        properties:
+          image:
+            type: string
+            format: binary
+    responseBody:
+      contentType: image/png
+dependencies:
+  - rembg
+  - Pillow
+  - uvicorn
+  - fastapi
+ports:
+  - 8000
+commands:
+  - pip install rembg[cli]
+env:
+  - key: PYTHONPATH
+    value: .
